@@ -2,7 +2,9 @@ window.onload = function () {
 console.log("loaded");
 
 $('#btn').on('click', function(){
-    fetchHeroes(function(data){
+    let hero = $('#search-input').val()
+    console.log(hero)
+    fetchHeroes(hero, function(data){
         alert(data)
     });
 });
@@ -11,10 +13,13 @@ $('#btn').on('click', function(){
 
 
 //fetch superheroes
-function fetchHeroes(callback){
+function fetchHeroes(alias, callback){
     $.ajax({
         url:"http://localhost/superheroes.php",
         type: "GET",
+        data: {
+            alias: alias,
+          },
         success: function (data){
             callback(data)
         }
