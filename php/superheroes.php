@@ -1,5 +1,8 @@
 <?php
 
+ header("Access-Control-Allow-Origin: *");
+
+
 $superheroes = [
   [
       "id" => 1,
@@ -60,13 +63,30 @@ $superheroes = [
       "name" => "Wanda Maximoff",
       "alias" => "Scarlett Witch",
       "biography" => "Notably powerful, Wanda Maximoff has fought both against and with the Avengers, attempting to hone her abilities and do what she believes is right to help the world.",
-  ], 
+  ],
 ];
 
+echo trim(searchForAlias(filter_input(INPUT_GET,"alias",FILTER_SANITIZE_STRING),$superheroes));
+function searchForAlias($alias, $array) {
+
+   foreach ($array as $key => $val) {
+       if (($val['alias'] === $alias) || ($val['name'] === $alias) ) {
+           return $array[$key]['alias'].';'.'AKA '.$array[$key]['name'].';'.$array[$key]['biography'];
+       }
+	   if($alias == ''){
+		   return 'All'.defaultreturn($array);
+	   }
+   }
+   return 'No Super Hero Found';
+}
+function defaultreturn($array) {
+	$test='';
+	foreach($array as $superhero => $value) {
+		$test.= ';'.$value['alias'] ;
+	}
+	return $test;
+
+}
 ?>
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+
