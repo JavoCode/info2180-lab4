@@ -66,7 +66,18 @@ $superheroes = [
   ],
 ];
 
+
+#echo and print works the same (marginal difference)
+#though sir might have initially had his variables returned in a html element.
+#I thought doing it as clean as possible would be a much better route to go.
+#So to be clear my endpoint(php file) does not return a html element but rather a string of information separated by a ';'
+#that ';' is then parsed using JS and read using the necessary functions and files
 echo trim(searchForAlias(filter_input(INPUT_GET,"alias",FILTER_SANITIZE_STRING),$superheroes));
+
+#php way of checking if the alias or name given is in the array.
+#if it does exist return the alias, name and biography
+#if the input given is empty we send all the heroes(Though i checked for a empty string it would have been better to check if empty)
+#if all of these fail, thus meaning a string was sent but it was neither an empty string or an actual hero(output no super hero found)
 function searchForAlias($alias, $array) {
 
    foreach ($array as $key => $val) {
@@ -79,6 +90,8 @@ function searchForAlias($alias, $array) {
    }
    return 'No Super Hero Found';
 }
+
+#this function just returns the alias of heroes from the default array
 function defaultreturn($array) {
 	$test='';
 	foreach($array as $superhero => $value) {
